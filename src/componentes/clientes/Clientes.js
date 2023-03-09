@@ -22,7 +22,7 @@ function Clientes() {
     // use effect es similar a componentdidmount y willmount
     useEffect( () => {
         consultarApi();
-    }, []);
+    }, [clientes]); // colocamos a clientes aqui, para que al eliminar, se detecte el cambio y vuelve a ejecutar consultarApi y refresca la vista
 
     return(
         <Fragment>
