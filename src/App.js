@@ -14,6 +14,10 @@ import NuevoCliente from "./componentes/clientes/NuevoCliente";
 import EditarCliente from "./componentes/clientes/EditarCliente";
 
 import Productos from "./componentes/productos/Productos";
+import NuevoProducto from "./componentes/productos/NuevoProducto";
+import EditarProducto from "./componentes/productos/EditarProducto";
+
+
 import Pedidos from "./componentes/pedidos/Pedidos";
 
 
@@ -35,6 +39,8 @@ function App() {
                 <Route exact path="/clientes/editar/:id" element={<EditarCliente />} />
 
                 <Route path="/productos" element={<Productos />} />
+                <Route path="/productos/nuevo" element={<NuevoProducto />} />
+                <Route path="/productos/editar/:id" element={<EditarProducto />} />
 
                 <Route path="/pedidos" element={<Pedidos />} />
               </Routes>
