@@ -49,6 +49,11 @@ function Cliente({cliente}) {
                 Editar Cliente
             </Link>
 
+            <Link to={`/pedidos/nuevo/${_id}`} className="btn btn-amarillo">
+                <i className="fas fa-plus"></i>
+                Nuevo Pedido
+            </Link>
+
             <button type="button" className="btn btn-rojo btn-eliminar" onClick={() => eliminarCliente(_id) /*se usa un arrowfunction para que no se ejecute al cargar la pagina y permite enviar el id a la funcion eliminarCliente, sino se ejecuta una vez por cada registro en consola */}> 
                 <i className="fas fa-times"></i>
                 Eliminar Cliente
