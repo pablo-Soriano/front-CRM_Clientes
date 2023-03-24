@@ -1,19 +1,23 @@
 import React from "react";
 
-const FormCantidadProducto = ({producto}) => {
+const FormCantidadProducto = (props) => {
+
+  const {producto, restarProductos, aumentarProductos, eliminarProductoPedido, index} = props;
+  const {nombre, precio, cantidad, _id} = producto
+
   return (
     <li>
       <div className="texto-producto">
-        <p className="nombre"> {producto.nombre} </p>
-        <p className="precio"> ${producto.precio} </p>
+        <p className="nombre"> {nombre} </p>
+        <p className="precio"> ${precio} </p>
       </div>
       <div className="acciones">
         <div className="contenedor-cantidad">
-          <i className="fas fa-minus"></i>
-          <p> {producto.cantidad} </p>
-          <i className="fas fa-plus"></i>
+          <i className="fas fa-minus" onClick={() => restarProductos(index)}></i>
+          <p> {cantidad} </p>
+          <i className="fas fa-plus" onClick={() => aumentarProductos(index)}></i>
         </div>
-        <button type="button" className="btn btn-rojo">
+        <button type="button" className="btn btn-rojo" onClick={() => eliminarProductoPedido(_id)} >
           <i className="fas fa-minus-circle"></i>
           Eliminar Producto
         </button>

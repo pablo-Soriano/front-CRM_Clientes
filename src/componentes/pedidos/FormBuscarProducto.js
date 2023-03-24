@@ -7,7 +7,7 @@ const FormBuscarProducto = (props) => {
 
         <div className="campo">
         <label>Productos:</label>
-        <input type="text" placeholder="Nombre Productos" name="productos" onChange={props.leerDatosBusqueda} />
+        <input type="text" placeholder="Nombre Productos" name="productos" onChange={props.leerDatosBusqueda } />
         </div>
 
         <input type="submit" className='btn btn-azul btn-block' value="Buscar Producto" placeholder='Nombre Productos' />
