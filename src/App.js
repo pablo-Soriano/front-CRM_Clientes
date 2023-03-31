@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 
 // Routing
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -19,37 +19,45 @@ import EditarProducto from "./componentes/productos/EditarProducto";
 
 import Pedidos from "./componentes/pedidos/Pedidos";
 import NuevoPedido from "./componentes/pedidos/NuevoPedido";
+import Login from "./componentes/auth/Login";
+
+import { CRMContext, CRMProvider } from "./context/CRMcontext";
 
 
 
 
 function App() {
+
+  // utilizar context en el componente
+  const [auth, guardarAuth] = useContext(CRMContext);
+
   return (
     <Router>
       <Fragment>
-        <Header />
+        <CRMProvider value={[auth, guardarAuth]} >
+          <Header />
 
-        <div className="grid contenedor contenido-principal">
-          <Navegacion />
+          <div className="grid contenedor contenido-principal">
+            <Navegacion />
 
-          <main className="caja-contenido col-9">
-              <Routes>
-                <Route exact path="/" element={<Clientes />} />
-                <Route exact path="/clientes/nuevo" element={<NuevoCliente />} />
-                <Route exact path="/clientes/editar/:id" element={<EditarCliente />} />
+            <main className="caja-contenido col-9">
+                <Routes>
+                  <Route exact path="/" element={<Clientes />} />
+                  <Route exact path="/clientes/nuevo" element={<NuevoCliente />} />
+                  <Route exact path="/clientes/editar/:id" element={<EditarCliente />} />
 
-                <Route path="/productos" element={<Productos />} />
-                <Route path="/productos/nuevo" element={<NuevoProducto />} />
-                <Route path="/productos/editar/:id" element={<EditarProducto />} />
+                  <Route path="/productos" element={<Productos />} />
+                  <Route path="/productos/nuevo" element={<NuevoProducto />} />
+                  <Route path="/productos/editar/:id" element={<EditarProducto />} />
 
-                <Route path="/pedidos" element={<Pedidos />} />
-                <Route path="/pedidos/nuevo/:id" element={<NuevoPedido />} />
-              </Routes>
+                  <Route path="/pedidos" element={<Pedidos />} />
+                  <Route path="/pedidos/nuevo/:id" element={<NuevoPedido />} />
 
-          </main>
-        </div>
-
-
+                  <Route path="/iniciar-sesion" element={<Login />} />
+                </Routes>
+            </main>
+          </div>
+        </CRMProvider>
       </Fragment>
     </Router>
   );

@@ -1,28 +1,56 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment, useContext } from 'react';
 
 //importar cliente axios
 import {clienteAxios} from '../../config/axios';
 import Cliente from './Cliente';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 
+// importar el Context
+import { CRMContext } from '../../context/CRMcontext';
 
-function Clientes() {
+
+function Clientes(props) {
+    const history = useNavigate();
     //trabajar con el state
     const [clientes, guardarClientes] = useState([]);
 
-    // query a la API
-    const consultarApi = async () =>{
-        const clientesConsulta = await clienteAxios.get('/clientes');
-        
-         // colocar el resultado en el state
-         guardarClientes(clientesConsulta.data);
-    }
+    // utilizar valores del context
+    const [auth, guardarAuth] = useContext(CRMContext);
 
     // use effect es similar a componentdidmount y willmount
     useEffect( () => {
-        consultarApi();
+
+        if(auth.token != '') {
+            // query a la API
+             const consultarApi = async () =>{
+                try {
+                    const clientesConsulta = await clienteAxios.get('/clientes', {
+                        headers: {
+                        Authorization: `Bearer ${auth.token}`
+                        }
+                    });
+                        // colocar el resultado en el state
+                        guardarClientes(clientesConsulta.data);
+                } catch (error) {
+                    // Error con autorizacion
+                    if(error.response.status = 500) {
+                        history('/iniciar-sesion');
+                    }
+                }
+            }
+            consultarApi(); 
+        } else {
+            // Redireccionar
+            history('/iniciar-sesion');
+        }
     }, [clientes]); // colocamos a clientes aqui, para que al eliminar, se detecte el cambio y vuelve a ejecutar consultarApi y refresca la vista
+
+
+    // si el state esta como false
+    if(!auth.auth) {
+        history('/iniciar-sesion');
+    }
 
         // Spinner de carga
         if(!clientes.length) return <Spinner />
